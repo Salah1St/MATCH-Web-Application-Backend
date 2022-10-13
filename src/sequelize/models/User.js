@@ -83,60 +83,99 @@ module.exports = (sequelize, DataTypes) => {
 
     { underscored: true }
   );
-  //   User.associate = (db) => {
-  //     User.hasMany(db.Post, {
-  //       foreignKey: {
-  //         name: 'userId',
-  //         allowNull: false,
-  //       },
+  User.associate = (db) => {
+    User.hasMany(db.Post, {
+      foreignKey: {
+        name: 'userId',
+        allowNull: false,
+      },
 
-  //       onDelete: 'RESTRICT',
-  //       onUpdate: 'RESTRICT',
-  //     });
+      onDelete: 'RESTRICT',
+      onUpdate: 'RESTRICT',
+    });
 
-  //     User.hasMany(db.Comment, {
-  //       foreignKey: {
-  //         name: 'userId',
-  //         allowNull: false,
-  //       },
-  //       onDelete: 'RESTRICT',
-  //       onUpdate: 'RESTRICT',
-  //     });
-  //     User.hasMany(db.Bookmark, {
-  //       foreignKey: {
-  //         name: 'userId',
-  //         allowNull: false,
-  //       },
-  //       onDelete: 'RESTRICT',
-  //       onUpdate: 'RESTRICT',
-  //     });
-  //     User.hasMany(db.Follow, {
-  //       as: 'UserFollower',
-  //       foreignKey: {
-  //         name: 'userFollower',
-  //         allowNull: false,
-  //       },
-  //       onDelete: 'RESTRICT',
-  //       onUpdate: 'RESTRICT',
-  //     });
-  //     User.hasMany(db.Follow, {
-  //       as: 'UserBeingFollower',
-  //       foreignKey: {
-  //         name: 'userBeingFollow',
-  //         allowNull: false,
-  //       },
-  //       onDelete: 'RESTRICT',
-  //       onUpdate: 'RESTRICT',
-  //     });
-  //     User.hasMany(db.BidPrice, {
-  //       foreignKey: {
-  //         name: 'userId',
-  //         allowNull: false,
-  //       },
-  //       onDelete: 'RESTRICT',
-  //       onUpdate: 'RESTRICT',
-  //     });
-  //   };
+    User.hasMany(db.UserImage, {
+      foreignKey: {
+        name: 'userId',
+        allowNull: false,
+      },
+
+      onDelete: 'RESTRICT',
+      onUpdate: 'RESTRICT',
+    });
+
+    User.hasMany(db.Like, {
+      foreignKey: {
+        name: 'userId',
+        allowNull: false,
+      },
+
+      onDelete: 'RESTRICT',
+      onUpdate: 'RESTRICT',
+    });
+    User.hasMany(db.Comment, {
+      foreignKey: {
+        name: 'userId',
+        allowNull: false,
+      },
+
+      onDelete: 'RESTRICT',
+      onUpdate: 'RESTRICT',
+    });
+    User.hasMany(db.Interest, {
+      foreignKey: {
+        name: 'userId',
+        allowNull: false,
+      },
+
+      onDelete: 'RESTRICT',
+      onUpdate: 'RESTRICT',
+    });
+
+    //     User.hasMany(db.Comment, {
+    //       foreignKey: {
+    //         name: 'userId',
+    //         allowNull: false,
+    //       },
+    //       onDelete: 'RESTRICT',
+    //       onUpdate: 'RESTRICT',
+    //     });
+    //     User.hasMany(db.Bookmark, {
+    //       foreignKey: {
+    //         name: 'userId',
+    //         allowNull: false,
+    //       },
+    //       onDelete: 'RESTRICT',
+    //       onUpdate: 'RESTRICT',
+    //     });
+    //     User.hasMany(db.Follow, {
+    //       as: 'UserFollower',
+    //       foreignKey: {
+    //         name: 'userFollower',
+    //         allowNull: false,
+    //       },
+    //       onDelete: 'RESTRICT',
+    //       onUpdate: 'RESTRICT',
+    //     });
+    //     User.hasMany(db.Follow, {
+    //       as: 'UserBeingFollower',
+    //       foreignKey: {
+    //         name: 'userBeingFollow',
+    //         allowNull: false,
+    //       },
+    //       onDelete: 'RESTRICT',
+    //       onUpdate: 'RESTRICT',
+    //     });
+    //     User.hasMany(db.BidPrice, {
+    //       foreignKey: {
+    //         name: 'userId',
+    //         allowNull: false,
+    //       },
+    //       onDelete: 'RESTRICT',
+    //       onUpdate: 'RESTRICT',
+    // }
+    // );
+  };
 
   return User;
 };
