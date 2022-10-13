@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 
 const AppError = require('../utils/appError');
-const { User } = require('../models');
+const { User } = require('../');
 
-const genToken = payload =>
+const genToken = (payload) =>
   jwt.sign(payload, process.env.JWT_SECRET_KEY || 'private_key', {
-    expiresIn: process.env.JWT_EXPIRES || '1d'
+    expiresIn: process.env.JWT_EXPIRES || '1d',
   });
 
 exports.register = async (req, res, next) => {
@@ -41,7 +41,7 @@ exports.register = async (req, res, next) => {
       lastName,
       email: isEmail ? emailOrMobile : null,
       mobile: isMobile ? emailOrMobile : null,
-      password: hashedPassword
+      password: hashedPassword,
     });
 
     const token = genToken({ id: user.id });
@@ -61,8 +61,8 @@ exports.login = async (req, res, next) => {
 
     const user = await User.findOne({
       where: {
-        [Op.or]: [{ email: emailOrMobile }, { mobile: emailOrMobile }]
-      }
+        [Op.or]: [{ email: emailOrMobile }, { mobile: emailOrMobile }],
+      },
     });
 
     if (!user) {
