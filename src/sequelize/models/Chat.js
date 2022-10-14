@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   Chat.associate = (db) => {
     Chat.belongsTo(db.User, {
-      as: 'acceptId',
+      as: 'myacceptId',
       foreignKey: {
         name: 'acceptId',
         allowNull: false,
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'RESTRICT',
     });
     Chat.belongsTo(db.User, {
-      as: 'requestId',
+      as: 'myrequestId',
       foreignKey: {
         name: 'requestId',
         allowNull: false,
