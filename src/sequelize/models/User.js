@@ -176,15 +176,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'RESTRICT',
     });
     User.hasMany(db.Match, {
-      as: 'userId',
-      foreignKey: {
-        name: 'userId',
-        allowNull: false,
-      },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
-    });
-    User.hasMany(db.Match, {
       as: 'secondId',
       foreignKey: {
         name: 'secondId',
