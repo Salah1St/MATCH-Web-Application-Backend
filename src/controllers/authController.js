@@ -1,6 +1,7 @@
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
 // const { Op } = require("sequelize");
 
 const AppError = require("../utils/appError");
@@ -21,10 +22,15 @@ exports.register = async (req, res, next) => {
       firstName,
       lastName,
       birthDate,
+      gender,
     } = req.body;
 
     if (!userName) {
       throw new AppError("username is required", 400);
+    }
+
+    if (!gender) {
+      throw new AppError("gender is required", 400);
     }
 
     if (!emailOrMobile) {
@@ -58,20 +64,21 @@ exports.register = async (req, res, next) => {
       throw new AppError("email address or mobile is invalid format", 400);
     }
 
-    const isDate = validator.isDate(birthDate + "");
-    if (!isDate) {
-      throw new AppError("birthdate id invalid format");
-    }
+    // const isDate = validator.isDate(birthDate + "");
+    // if (!isDate) {
+    //   throw new AppError("birthdate id invalid format");
+    // }
 
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = await User.create({
-      userName,
+      username: userName,
       email: isEmail ? emailOrMobile : null,
       phoneNumber: isMobile ? emailOrMobile : null,
       password: hashedPassword,
       firstName,
       lastName,
-      birthDate: isDate,
+      birthDate,
+      gender,
     });
 
     const token = genToken({ id: user.id });
