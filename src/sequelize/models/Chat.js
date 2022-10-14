@@ -1,15 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
-  const Interest = sequelize.define(
-    'Interest',
+  const Chat = sequelize.define(
+    'Chat',
     {
-      icon: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
-      },
-      text: {
+      message: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -19,23 +12,25 @@ module.exports = (sequelize, DataTypes) => {
     },
     { underscored: true }
   );
-  Interest.associate = (db) => {
-    Interest.belongsTo(db.User, {
+  Chat.associate = (db) => {
+    Chat.belongsTo(db.User, {
+      as: 'acceptId',
       foreignKey: {
-        name: 'adminId',
+        name: 'acceptId',
         allowNull: false,
       },
       onDelete: 'RESTRICT',
       onUpdate: 'RESTRICT',
     });
-    Interest.hasMany(db.InterestLog, {
+    Chat.belongsTo(db.User, {
+      as: 'requestId',
       foreignKey: {
-        name: 'interestId',
+        name: 'requestId',
         allowNull: false,
       },
       onDelete: 'RESTRICT',
       onUpdate: 'RESTRICT',
     });
   };
-  return Interest;
+  return Chat;
 };
