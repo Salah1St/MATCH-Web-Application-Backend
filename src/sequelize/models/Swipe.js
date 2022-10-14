@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Swipe = sequelize.define('Swipe', {}, { underscored: true });
   Swipe.associate = (db) => {
     Swipe.belongsTo(db.User, {
-      as: 'firstId',
+      as: 'swipefirstId',
       foreignKey: {
         name: 'firstId',
         allowNull: false,
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'RESTRICT',
     });
     Swipe.belongsTo(db.User, {
-      as: 'secondId',
+      as: 'swipesecondId',
       foreignKey: {
         name: 'secondId',
         allowNull: false,

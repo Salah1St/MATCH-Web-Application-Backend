@@ -127,7 +127,7 @@ module.exports = (sequelize, DataTypes) => {
 
     //************Chat ******** */
     User.hasMany(db.Chat, {
-      as: 'acceptId',
+      as: 'myacceptId',
       foreignKey: {
         name: 'acceptId',
         allowNull: false,
@@ -136,7 +136,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'RESTRICT',
     });
     User.hasMany(db.Chat, {
-      as: 'requestId',
+      as: 'myrequestId',
       foreignKey: {
         name: 'requestId',
         allowNull: false,
@@ -147,7 +147,7 @@ module.exports = (sequelize, DataTypes) => {
 
     /*******Swipe********* */
     User.hasMany(db.Swipe, {
-      as: 'firstId',
+      as: 'swipefirstId',
       foreignKey: {
         name: 'firstId',
         allowNull: false,
@@ -156,7 +156,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'RESTRICT',
     });
     User.hasMany(db.Swipe, {
-      as: 'secondId',
+      as: 'swipesecondId',
       foreignKey: {
         name: 'secondId',
         allowNull: false,
@@ -167,7 +167,7 @@ module.exports = (sequelize, DataTypes) => {
 
     //************** match */
     User.hasMany(db.Match, {
-      as: 'firstId',
+      as: 'myfirstId',
       foreignKey: {
         name: 'firstId',
         allowNull: false,
@@ -175,17 +175,9 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'RESTRICT',
       onUpdate: 'RESTRICT',
     });
+
     User.hasMany(db.Match, {
-      as: 'userId',
-      foreignKey: {
-        name: 'userId',
-        allowNull: false,
-      },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
-    });
-    User.hasMany(db.Match, {
-      as: 'secondId',
+      as: 'mysecondId',
       foreignKey: {
         name: 'secondId',
         allowNull: false,

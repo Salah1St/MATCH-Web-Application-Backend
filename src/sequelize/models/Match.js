@@ -2,17 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Match = sequelize.define('Match', {}, { underscored: true });
   Match.associate = (db) => {
     Match.belongsTo(db.User, {
-      as: 'userId',
-      foreignKey: {
-        name: 'userId',
-        allowNull: false,
-      },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
-    });
-
-    Match.belongsTo(db.User, {
-      as: 'firstId',
+      as: 'myfirstId',
       foreignKey: {
         name: 'firstId',
         allowNull: false,
@@ -21,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'RESTRICT',
     });
     Match.belongsTo(db.User, {
-      as: 'secondId',
+      as: 'mysecondId',
       foreignKey: {
         name: 'secondId',
         allowNull: false,
