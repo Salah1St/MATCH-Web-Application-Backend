@@ -15,7 +15,7 @@ const genToken = (payload) =>
 exports.register = async (req, res, next) => {
   try {
     const {
-      userName,
+      username,
       emailOrMobile,
       password,
       confirmPassword,
@@ -25,7 +25,7 @@ exports.register = async (req, res, next) => {
       gender,
     } = req.body;
 
-    if (!userName) {
+    if (!username) {
       throw new AppError("username is required", 400);
     }
 
@@ -71,7 +71,7 @@ exports.register = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = await User.create({
-      username: userName,
+      username,
       email: isEmail ? emailOrMobile : null,
       phoneNumber: isMobile ? emailOrMobile : null,
       password: hashedPassword,
@@ -80,7 +80,6 @@ exports.register = async (req, res, next) => {
       birthDate,
       gender,
     });
-
     const token = genToken({ id: user.id });
     res.status(201).json({ token });
   } catch (err) {
@@ -88,35 +87,30 @@ exports.register = async (req, res, next) => {
   }
 };
 
-// exports.login = async (req, res, next) => {
-//   try {
-//     const { emailOrMobile, password } = req.body;
+exports.login = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
 
-//     if (typeof emailOrMobile !== "string" || typeof password !== "string") {
-//       throw new AppError("email address or mobile or password is invalid", 400);
-//     }
+    if (typeof username !== "string" || typeof password !== "string") {
+      throw new AppError("username or password is invalid", 400);
+    }
 
-//     const user = await User.findOne({
-//       where: {
-//         [Op.or]: [{ email: emailOrMobile }, { mobile: emailOrMobile }],
-//       },
-//     });
+    const user = await User.findOne({ where: { username: username } });
+    if (!user) {
+      throw new AppError("not found user", 400);
+    }
 
-//     if (!user) {
-//       throw new AppError("email address or mobile or password is invalid", 400);
-//     }
+    const isCorrect = await bcrypt.compare(password, user.password);
+    if (!isCorrect) {
+      throw new AppError("password is invalid", 400);
+    }
 
-//     const isCorrect = await bcrypt.compare(password, user.password);
-//     if (!isCorrect) {
-//       throw new AppError("email address or mobile or password is invalid", 400);
-//     }
-
-//     const token = genToken({ id: user.id });
-//     res.status(200).json({ token });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+    const token = genToken({ id: user.id });
+    res.status(200).json({ token });
+  } catch (err) {
+    next(err);
+  }
+};
 
 // exports.getMe = (req, res) => {
 //   res.status(200).json({ user: req.user });
