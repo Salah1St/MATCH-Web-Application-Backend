@@ -6,7 +6,7 @@ const authenticate = require("../middlewares/authenticate");
 
 const router = express.Router();
 
-router.route("/register").post(upload.none(), authController.register);
+router.route("/register").post(authController.register);
 router.post("/login", upload.none(), authController.login);
 // router.get('/me', authenticate, authController.getMe);
 
