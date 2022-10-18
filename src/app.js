@@ -1,6 +1,5 @@
 // const { sequelize } = require("../src/sequelize/models");
-// sequelize.sync({ force: true });
-
+// sequelize.sync({ alter: true }); 
 
 require("dotenv").config();
 const express = require("express");
@@ -30,5 +29,5 @@ app.use("/auth", authRoute);
 app.use(notFound);
 app.use(error);
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`server running on port: ${port}`));
