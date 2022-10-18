@@ -1,33 +1,105 @@
 // const { sequelize } = require("../src/sequelize/models");
-// sequelize.sync({ alter: true }); 
+// sequelize.sync({ alter: true });
 
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const morgan = require('morgan');
+const http = require('http');
+const server = http.createServer(app);
+const { Chat } = require('../src/sequelize/models');
 
-const authRoute = require("./routes/authRoute");
+const authRoute = require('./routes/authRoute');
+const chatRoute = require('./routes/chatRoute');
 // const friendRoute = require('./routes/friendRoute');
 // const postRoute = require('./routes/postRoute');
 // const userRoute = require('./routes/userRoute');
-const notFound = require("./middlewares/notFound");
-const error = require("./middlewares/error");
+const notFound = require('./middlewares/notFound');
+const error = require('./middlewares/error');
 // const authenticate = require('./middlewares/authenticate');
+const { Server } = require('socket.io');
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+});
 
-const app = express();
-
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
 }
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/auth", authRoute);
-
+app.use('/auth', authRoute);
+app.use('/chat', chatRoute);
+app.get('/test', (req, res) => {
+  res.json({ hi: 'hi' });
+});
 app.use(notFound);
 app.use(error);
 
+let users = [];
+
+const addUser = (userId, socketId) => {
+  !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
+};
+
+const removeUser = (socketId) => {
+  users = users.filter((user) => user.socketId !== socketId);
+};
+
+const getUser = (userId) => {
+  return users.find((user) => user.userId === userId);
+};
+
+io.on('connection', (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+
+  socket.on('addUser', (userId) => {
+    addUser(userId, socket.id);
+    io.emit('getUsers', users);
+  });
+
+  socket.on('sendMessage', async ({ senderId, receiverId, text }) => {
+    const user = await getUser(receiverId);
+    const newmessage = await Chat.create({
+      chat: text,
+      equestId: senderId,
+      acceptId: receiverId,
+    });
+
+    io.to(user.socketId).emit('getMessage', {
+      senderId,
+      text,
+    });
+  });
+
+  socket.on('disconnect', () => {
+    console.log('a user disconnected!');
+    removeUser(socket.id);
+    io.emit('getUsers', users);
+  });
+
+  // socket.on('join_room', (data) => {
+  //   socket.join(data);
+  //   console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  // });
+
+  // socket.on('send_message', (data) => {
+  //   console.log(data);
+  //   socket.to(data.room).emit('receive_message', data);
+  // });
+
+  // socket.on('disconnect', () => {
+  //   console.log('User Disconnected', socket.id);
+  // });
+});
+
 const port = process.env.PORT || 8080;
-app.listen(port, () => console.log(`server running on port: ${port}`));
+
+server.listen(port, () => console.log(`server running on port: ${port}`));
