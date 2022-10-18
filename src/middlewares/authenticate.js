@@ -1,31 +1,31 @@
-const jwt = require('jsonwebtoken');
-
-const AppError = require('../utils/appError');
-const { User } = require('../models');
+const jwt = require("jsonwebtoken");
+const AppError = require("../utils/appError");
+const { User } = require("../sequelize/models");
 
 module.exports = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
-    if (!authorization || !authorization.startsWith('Bearer')) {
-      throw new AppError('unauthenticated', 401);
+    if (!authorization || !authorization.startsWith("Bearer")) {
+      throw new AppError("unauthenticated", 401);
     }
 
-    const token = authorization.split(' ')[1];
+    const token = authorization.split(" ")[1];
     if (!token) {
-      throw new AppError('unauthenticated', 401);
+      throw new AppError("unauthenticated", 401);
     }
 
     const payload = jwt.verify(
       token,
-      process.env.JWT_SECRET_KEY || 'private_key'
+      process.env.JWT_SECRET_KEY || "private_key"
     );
 
     const user = await User.findOne({
       where: { id: payload.id },
-      attributes: { exclude: 'password' }
+      attributes: { exclude: "password" },
     });
+
     if (!user) {
-      throw new AppError('unauthenticated', 401);
+      throw new AppError("unauthenticated", 401);
     }
 
     req.user = user;

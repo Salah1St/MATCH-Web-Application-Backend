@@ -1,28 +1,34 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
+// const { sequelize } = require("../src/sequelize/models");
+// sequelize.sync({ force: true });
+// sequelize.sync();
 
-const authRoute = require('./routes/authRoute');
-const friendRoute = require('./routes/friendRoute');
-const postRoute = require('./routes/postRoute');
-const userRoute = require('./routes/userRoute');
-const notFound = require('./middlewares/notFound');
-const error = require('./middlewares/error');
-const authenticate = require('./middlewares/authenticate');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
+
+const authRoute = require("./routes/authRoute");
+const adminRoute = require("./routes/adminRoute");
+// const friendRoute = require('./routes/friendRoute');
+// const postRoute = require('./routes/postRoute');
+// const userRoute = require('./routes/userRoute');
+const notFound = require("./middlewares/notFound");
+const error = require("./middlewares/error");
+// const authenticate = require('./middlewares/authenticate');
 
 const app = express();
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 }
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/auth', authRoute);
-
+app.use("/auth", authRoute);
+app.use("/admin", adminRoute);
+// app.use("/member", memberRoute);
 
 app.use(notFound);
 app.use(error);
