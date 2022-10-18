@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
-const { User } = require("../sequelize/models/User");
+const { User } = require("../sequelize/models");
 
 module.exports = async (req, res, next) => {
   try {
@@ -23,6 +23,7 @@ module.exports = async (req, res, next) => {
       where: { id: payload.id },
       attributes: { exclude: "password" },
     });
+
     if (!user) {
       throw new AppError("unauthenticated", 401);
     }
