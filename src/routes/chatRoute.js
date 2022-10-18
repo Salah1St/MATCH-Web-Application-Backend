@@ -6,7 +6,9 @@ const authenticate = require('../middlewares/authenticate');
 
 const router = express.Router();
 
-router.route('/:id').get(upload.none(), chatController.getAllChatByUserId);
+router
+  .route('/')
+  .get(upload.none(), authenticate, chatController.getAllChatByUserId);
 
 // router.get('/me', authenticate, authController.getMe);
 

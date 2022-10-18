@@ -10,7 +10,7 @@ const { Chat } = require('../sequelize/models');
 
 exports.getAllChatByUserId = async (req, res, next) => {
   try {
-    const id = +req.params.id;
+    const id = req.user.id;
     const { otherId } = req.body;
     const userChat = await Chat.findAll({
       where: {
