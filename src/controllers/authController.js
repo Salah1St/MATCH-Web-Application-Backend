@@ -119,6 +119,20 @@ exports.login = async (req, res, next) => {
   }
 };
 
-// exports.getMe = (req, res) => {
-//   res.status(200).json({ user: req.user });
-// };
+exports.getMe = async (req, res) => {
+  try {
+    const user = req.user
+    console.log(user);
+
+    const data = await User.findOne({
+      where: { id: user.id },
+      attributes: { exclude: 'password' },
+      // include: { model: ShopPath }
+
+    });
+    res.json(data)
+  } catch (err) {
+    next(err);
+  }
+
+};
