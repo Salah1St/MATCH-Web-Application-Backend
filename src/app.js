@@ -10,8 +10,11 @@ const http = require('http');
 const server = http.createServer(app);
 const { Chat } = require('../src/sequelize/models');
 
-const authRoute = require('./routes/authRoute');
-const chatRoute = require('./routes/chatRoute');
+
+const authRoute = require("./routes/authRoute");
+const adminRoute = require("./routes/adminRoute");
+const memberRoute = require("./routes/memberRoute");
+
 // const friendRoute = require('./routes/friendRoute');
 // const postRoute = require('./routes/postRoute');
 // const userRoute = require('./routes/userRoute');
@@ -52,8 +55,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-
-app.use('/auth', authRoute);
+app.use("/auth", authRoute);
+app.use("/admin", adminRoute);
+app.use("/member", memberRoute);
 app.use('/chat', chatRoute);
 app.get('/test', (req, res) => {
   res.json({ hi: 'hi' });
