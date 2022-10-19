@@ -9,6 +9,7 @@ const morgan = require("morgan");
 
 const authRoute = require("./routes/authRoute");
 const adminRoute = require("./routes/adminRoute");
+
 // const friendRoute = require('./routes/friendRoute');
 // const postRoute = require('./routes/postRoute');
 // const userRoute = require('./routes/userRoute');
@@ -28,7 +29,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authRoute);
 app.use("/admin", adminRoute);
-// app.use("/member", memberRoute);
 
 app.use(notFound);
 app.use(error);
