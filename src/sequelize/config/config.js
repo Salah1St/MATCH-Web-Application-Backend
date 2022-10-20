@@ -1,9 +1,12 @@
-{
+require('dotenv').config()
+const {SQL_USERNAME,SQL_PASSWORD,SQL_DATABASE,SQL_HOST} = process.env
+
+module.exports = {
   "development": {
-    "username": "root",
-    "password": "24043300Ipod",
-    "database": "groupproject_match",
-    "host": "127.0.0.1",
+    "username": SQL_USERNAME,
+    "password": SQL_PASSWORD,
+    "database": SQL_DATABASE,
+    "host": SQL_HOST,
     "dialect": "mysql"
   },
   "test": {

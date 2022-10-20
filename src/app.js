@@ -14,6 +14,8 @@ const { Chat } = require('../src/sequelize/models');
 const authRoute = require("./routes/authRoute");
 const adminRoute = require("./routes/adminRoute");
 const memberRoute = require("./routes/memberRoute");
+const chatRoute = require("./routes/chatRoute");
+
 
 // const friendRoute = require('./routes/friendRoute');
 // const postRoute = require('./routes/postRoute');
