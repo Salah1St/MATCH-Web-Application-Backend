@@ -23,6 +23,7 @@ module.exports = async (req, res, next) => {
       where: { id: payload.id },
       attributes: { exclude: 'password' },
     });
+
     if (!user) {
       throw new AppError('unauthenticated', 401);
     }

@@ -12,6 +12,9 @@ const { Chat } = require('../src/sequelize/models');
 
 const authRoute = require('./routes/authRoute');
 const chatRoute = require('./routes/chatRoute');
+const adminRoute = require("./routes/adminRoute");
+
+
 // const friendRoute = require('./routes/friendRoute');
 // const postRoute = require('./routes/postRoute');
 // const userRoute = require('./routes/userRoute');
@@ -36,9 +39,11 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/auth', authRoute);
 app.use('/chat', chatRoute);
+app.use("/admin", adminRoute);
 app.get('/test', (req, res) => {
   res.json({ hi: 'hi' });
 });
+
 app.use(notFound);
 app.use(error);
 
