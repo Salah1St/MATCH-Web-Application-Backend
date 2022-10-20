@@ -195,6 +195,33 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'RESTRICT',
       onUpdate: 'RESTRICT',
     });
+
+    User.hasMany(db.ChatMessage, {
+      foreignKey: {
+        name: 'senderId',
+        allowNull: false,
+      },
+      onDelete: 'RESTRICT',
+      onUpdate: 'RESTRICT',
+    });
+    User.hasMany(db.ChatRoom, {
+      as: 'mylowerId',
+      foreignKey: {
+        name: 'userLowerId',
+        allowNull: false,
+      },
+      onDelete: 'RESTRICT',
+      onUpdate: 'RESTRICT',
+    });
+    User.hasMany(db.ChatRoom, {
+      as: 'myhigherId',
+      foreignKey: {
+        name: 'userHigherId',
+        allowNull: false,
+      },
+      onDelete: 'RESTRICT',
+      onUpdate: 'RESTRICT',
+    });
   };
 
   return User;

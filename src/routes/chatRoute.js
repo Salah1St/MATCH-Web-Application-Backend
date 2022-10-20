@@ -11,5 +11,8 @@ router
   .get(upload.none(), authenticate, chatController.getAllChatByUserId);
 
 // router.get('/me', authenticate, authController.getMe);
+router.get('/getFriendsRoom', authenticate, chatController.getFriendsRoom);
+router.post('/createRoom', authenticate, chatController.createRoom);
+
 
 module.exports = router;
