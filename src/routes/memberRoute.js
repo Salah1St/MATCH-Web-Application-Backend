@@ -18,4 +18,11 @@ router.delete(
   memberController.updateInterestLog
 );
 
+router.post(
+  "/addImage",
+  authenticate,
+  upload.single("url"),
+  memberController.addImage
+);
+
 module.exports = router;
