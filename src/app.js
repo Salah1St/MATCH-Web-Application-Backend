@@ -12,9 +12,11 @@ const { Chat } = require('../src/sequelize/models');
 
 const authRoute = require('./routes/authRoute');
 const chatRoute = require('./routes/chatRoute');
+const swipeRoute = require('./routes/swipeRoute');
 // const friendRoute = require('./routes/friendRoute');
 // const postRoute = require('./routes/postRoute');
 // const userRoute = require('./routes/userRoute');
+
 const notFound = require('./middlewares/notFound');
 const error = require('./middlewares/error');
 // const authenticate = require('./middlewares/authenticate');
@@ -25,22 +27,38 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
   },
 });
+io.on('connection', (socket) => {
+  console.log(`User connected ${socket.id}`);
+
+  // We can write our socket event listeners in here...
+  socket.on('ping', () => {
+    console.log('pong');
+  });
+
+  socket.on('sendMessage', (message) => {
+    console.log(message);
+    socket.broadcast.emit('receiveMessage', message);
+  });
+});
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-
+//=====================================================constance & local imported Zone
+//=====================================================Encoding Zone
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/auth', authRoute);
 app.use('/chat', chatRoute);
+app.use('/swipe', swipeRoute);
 app.get('/test', (req, res) => {
   res.json({ hi: 'hi' });
 });
 app.use(notFound);
 app.use(error);
+//=====================================================Listening Zone
 
 let users = [];
 
@@ -100,6 +118,6 @@ io.on('connection', (socket) => {
   // });
 });
 
-const port = process.env.PORT || 8000;
-
+const port = process.env.PORT || 8080;
+// app.listen(port,'192.168.1.88', () => console.log(`server running on port: ${port}`));
 server.listen(port, () => console.log(`server running on port: ${port}`));

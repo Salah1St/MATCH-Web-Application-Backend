@@ -1,3 +1,4 @@
+
 const jwt = require('jsonwebtoken');
 const AppError = require('../utils/appError');
 const { User } = require('../sequelize/models');
