@@ -12,25 +12,36 @@ module.exports = (sequelize, DataTypes) => {
     },
     { underscored: true }
   );
-  Chat.associate = (db) => {
-    Chat.belongsTo(db.User, {
-      as: 'myacceptId',
+  ChatRoom.associate = (db) => {
+    ChatRoom.belongsTo(db.User, {
+      as: 'mylowerId',
       foreignKey: {
-        name: 'acceptId',
+        name: 'userLowerId',
         allowNull: false,
       },
       onDelete: 'RESTRICT',
       onUpdate: 'RESTRICT',
     });
-    Chat.belongsTo(db.User, {
-      as: 'myrequestId',
+    ChatRoom.belongsTo(db.User, {
+      as: 'myhigherId',
       foreignKey: {
-        name: 'requestId',
+        name: 'userHigherId',
         allowNull: false,
       },
       onDelete: 'RESTRICT',
       onUpdate: 'RESTRICT',
     });
+    ChatRoom.hasMany(db.ChatMessage, {
+      foreignKey: {
+        name: 'chatRoomId',
+        allowNull: false,
+      },
+      onDelete: 'RESTRICT',
+      onUpdate: 'RESTRICT',
+    });
+
+
+
   };
-  return Chat;
+  return ChatRoom;
 };

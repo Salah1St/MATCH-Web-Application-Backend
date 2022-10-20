@@ -42,7 +42,25 @@ exports.getAllChatByUserId = async (req, res, next) => {
   }
 };
 
+
 exports.addMessage = async (req, res, next) => {
+  try {
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
+
+
+exports.getFriendsRoom = async (req, res, next) => {
+  try {
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+exports.createRoom = async (req, res, next) => {
   try {
   } catch (err) {
     console.log(err);
