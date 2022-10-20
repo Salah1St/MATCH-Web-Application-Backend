@@ -12,6 +12,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Chat } = require('../src/sequelize/models');
 
+const swipeRoute = require('./routes/swipeRoute');
 
 const authRoute = require("./routes/authRoute");
 const adminRoute = require("./routes/adminRoute");
@@ -38,20 +39,17 @@ io.on('connection', (socket) => {
 
   // We can write our socket event listeners in here...
   socket.on('ping', () => {
-    console.log("pong");
+    console.log('pong');
+  });
+
+  socket.on('sendMessage', (message) => {
+    console.log(message);
+    socket.broadcast.emit('receiveMessage', message);
+  });
 });
 
-socket.on('sendMessage', (message) => { 
-  
-  
-  console.log(message);
-  socket.broadcast.emit('receiveMessage',message)
-});
-});
-
-
-if (process.env.NODE_ENV === "development") {
-  app.use(morgan("dev"));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
 }
 //=====================================================constance & local imported Zone
 //=====================================================Encoding Zone
@@ -59,6 +57,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use('/swipe', swipeRoute);
 app.use("/auth", authRoute);
 app.use("/member", memberRoute);
 app.use('/chat', chatRoute);
@@ -130,4 +129,4 @@ io.on('connection', (socket) => {
 
 const port = process.env.PORT || 8080;
 // app.listen(port,'192.168.1.88', () => console.log(`server running on port: ${port}`));
-server.listen(port,() => console.log(`server running on port: ${port}`));
+server.listen(port, () => console.log(`server running on port: ${port}`));
