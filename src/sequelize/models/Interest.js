@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+      description: {
+        type: DataTypes.STRING,
+      },
+      interestImage: {
+        type: DataTypes.STRING,
+      },
     },
     { underscored: true }
   );
