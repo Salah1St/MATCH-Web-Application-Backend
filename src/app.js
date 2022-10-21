@@ -1,7 +1,6 @@
-const { sequelize } = require("../src/sequelize/models");
+const { sequelize } = require('../src/sequelize/models');
 // sequelize.sync({ alter: true });
 // sequelize.sync({ force: true });
-
 
 require('dotenv').config();
 const express = require('express');
@@ -14,11 +13,11 @@ const { Chat } = require('../src/sequelize/models');
 
 const swipeRoute = require('./routes/swipeRoute');
 
-const authRoute = require("./routes/authRoute");
-const adminRoute = require("./routes/adminRoute");
-const memberRoute = require("./routes/memberRoute");
-const chatRoute = require("./routes/chatRoute");
-
+const authRoute = require('./routes/authRoute');
+const adminRoute = require('./routes/adminRoute');
+const memberRoute = require('./routes/memberRoute');
+const chatRoute = require('./routes/chatRoute');
+const postRoute = require('./routes/postRoute');
 
 // const friendRoute = require('./routes/friendRoute');
 // const postRoute = require('./routes/postRoute');
@@ -58,10 +57,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/swipe', swipeRoute);
-app.use("/auth", authRoute);
-app.use("/member", memberRoute);
+app.use('/auth', authRoute);
+app.use('/member', memberRoute);
 app.use('/chat', chatRoute);
-app.use("/admin", adminRoute);
+app.use('/admin', adminRoute);
+app.use('/post', postRoute);
 app.get('/test', (req, res) => {
   res.json({ hi: 'hi' });
 });
