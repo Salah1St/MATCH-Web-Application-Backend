@@ -96,7 +96,7 @@ io.on('connection', (socket) => {
     const user = await getUser(receiverId);
     const newmessage = await Chat.create({
       chat: text,
-      equestId: senderId,
+      requestId: senderId,
       acceptId: receiverId,
     });
 
