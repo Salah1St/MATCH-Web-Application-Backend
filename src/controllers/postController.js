@@ -59,6 +59,7 @@ exports.getAllMyPosts = async (req, res, next) => {
 
     const allMyPosts = await Post.findAll({
       where: { userId: userId },
+      order: [['createdAt', 'DESC']],
       include: [
         {
           model: User,
@@ -90,6 +91,7 @@ exports.getAllMyMatchPosts = async (req, res, next) => {
 
     const allMyMatchPosts = await Post.findAll({
       where: { userId: matchIds },
+      order: [['createdAt', 'DESC']],
       include: [
         {
           model: User,
@@ -106,6 +108,7 @@ exports.getAllMyMatchPosts = async (req, res, next) => {
 exports.getAllPosts = async (req, res, next) => {
   try {
     const allPosts = await Post.findAll({
+      order: [['createdAt', 'DESC']],
       include: [
         {
           model: User,

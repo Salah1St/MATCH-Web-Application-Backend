@@ -18,6 +18,8 @@ const adminRoute = require('./routes/adminRoute');
 const memberRoute = require('./routes/memberRoute');
 const chatRoute = require('./routes/chatRoute');
 const postRoute = require('./routes/postRoute');
+const userImageRoute = require('./routes/userImageRoute');
+const commentRoute = require('./routes/commentRoute');
 
 // const friendRoute = require('./routes/friendRoute');
 // const postRoute = require('./routes/postRoute');
@@ -62,9 +64,9 @@ app.use('/member', memberRoute);
 app.use('/chat', chatRoute);
 app.use('/admin', adminRoute);
 app.use('/post', postRoute);
-app.get('/test', (req, res) => {
-  res.json({ hi: 'hi' });
-});
+app.use('/userImage', userImageRoute);
+app.use('/comment', commentRoute);
+
 app.use(notFound);
 app.use(error);
 //=====================================================Listening Zone
