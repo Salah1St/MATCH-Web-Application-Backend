@@ -12,3 +12,5 @@ router
 router
   .route('/')
   .post(upload.none(), authenticate, likeController.toggleLikeByPostId);
+
+module.exports = router;
