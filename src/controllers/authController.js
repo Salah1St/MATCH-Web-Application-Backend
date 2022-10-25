@@ -1,6 +1,7 @@
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cloudinary = require('../utils/cloudinary');
 
 // const { Op } = require("sequelize");
 
@@ -9,7 +10,7 @@ const { User } = require('../sequelize/models');
 
 const genToken = (payload) =>
   jwt.sign(payload, process.env.JWT_SECRET_KEY || 'private_key', {
-    expiresIn: process.env.JWT_EXPIRES || '1d'
+    expiresIn: process.env.JWT_EXPIRES || '1d',
   });
 
 exports.register = async (req, res, next) => {
@@ -22,7 +23,7 @@ exports.register = async (req, res, next) => {
       firstName,
       lastName,
       birthDate,
-      gender
+      gender,
     } = req.body;
     console.log(req.body);
     if (!username) {
@@ -78,12 +79,12 @@ exports.register = async (req, res, next) => {
       firstName,
       lastName,
       birthDate,
-      gender
+      gender,
     });
 
     const userInfo = await User.findOne({
       where: user.id,
-      attributes: { exclude: 'password' }
+      attributes: { exclude: 'password' },
     });
     console.log(userInfo);
 
@@ -121,18 +122,48 @@ exports.login = async (req, res, next) => {
 
 exports.getMe = async (req, res) => {
   try {
-    const user = req.user
-    console.log(user);
-
-    const data = await User.findOne({
+    const user = req.user;
+    const oneUser = await User.findOne({
       where: { id: user.id },
       attributes: { exclude: 'password' },
-      // include: { model: ShopPath }
-
     });
-    res.json(data)
+    res.status(200).json(oneUser);
   } catch (err) {
     next(err);
   }
+};
 
+exports.updateUser = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const { firstName, lastName, email, gender, occupation } = req.body;
+    const file = req.file;
+    console.log(firstName, lastName, email, gender, occupation, file);
+    const findUser = await User.findOne({ where: { id: user.id } });
+
+    let profileImage = findUser.profileImage;
+    if (file) {
+      const newUrl = await cloudinary.upload(
+        file.path,
+        profileImage ? cloudinary.getPublicId(profileImage) : null
+      );
+      profileImage = newUrl;
+    }
+
+    await User.update(
+      {
+        firstName,
+        lastName,
+        email,
+        gender,
+        occupation,
+        profileImage,
+      },
+      { where: { id: user.id } }
+    );
+    const showUser = await User.findOne({ where: { id: user.id } });
+    res.status(200).json({ showUser });
+  } catch (err) {
+    next(err);
+  }
 };
