@@ -12,7 +12,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    return queryInterface.bulkInsert("user_Images", [
+    return queryInterface.bulkInsert("user_images", [
       {
         url: "https://image.shutterstock.com/image-vector/man-beard-icon-flat-single-600w-627473393.jpg",
         created_at: new Date(),

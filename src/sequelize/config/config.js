@@ -1,5 +1,5 @@
 require('dotenv').config()
-const {SQL_USERNAME,SQL_PASSWORD,SQL_DATABASE,SQL_HOST} = process.env
+const {SQL_USERNAME,SQL_PASSWORD,SQL_DATABASE,SQL_HOST,SQL_PORT} = process.env
 
 module.exports = {
   "development": {
@@ -7,7 +7,8 @@ module.exports = {
     "password": SQL_PASSWORD,
     "database": SQL_DATABASE,
     "host": SQL_HOST,
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port":SQL_PORT
   },
   "test": {
     "username": "root",

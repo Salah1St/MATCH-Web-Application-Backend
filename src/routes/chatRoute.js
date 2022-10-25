@@ -13,6 +13,8 @@ router
 // router.get('/me', authenticate, authController.getMe);
 router.get('/getFriendsRoom', authenticate, chatController.getFriendsRoom);
 router.post('/createRoom', authenticate, chatController.createRoom);
+router.post('/addMessage', authenticate, chatController.addMessage);
+
 
 
 module.exports = router;
