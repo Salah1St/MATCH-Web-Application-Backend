@@ -1,37 +1,37 @@
-const { sequelize } = require('../src/sequelize/models');
+const { sequelize } = require("../src/sequelize/models");
 // sequelize.sync({ alter: true });
 // sequelize.sync({ force: true });
 
-require('dotenv').config();
-const express = require('express');
+require("dotenv").config();
+const express = require("express");
 const app = express();
-const cors = require('cors');
-const morgan = require('morgan');
-const http = require('http');
+const cors = require("cors");
+const morgan = require("morgan");
+const http = require("http");
 const server = http.createServer(app);
-const { Chat } = require('../src/sequelize/models');
+const { Chat } = require("../src/sequelize/models");
 
-const swipeRoute = require('./routes/swipeRoute');
+const swipeRoute = require("./routes/swipeRoute");
 
-const authRoute = require('./routes/authRoute');
-const adminRoute = require('./routes/adminRoute');
-const memberRoute = require('./routes/memberRoute');
-const chatRoute = require('./routes/chatRoute');
-const postRoute = require('./routes/postRoute');
-const userImageRoute = require('./routes/userImageRoute');
-const commentRoute = require('./routes/commentRoute');
-const likeRoute = require('./routes/likeRoute');
+const authRoute = require("./routes/authRoute");
+const adminRoute = require("./routes/adminRoute");
+const memberRoute = require("./routes/memberRoute");
+const chatRoute = require("./routes/chatRoute");
+const postRoute = require("./routes/postRoute");
+const userImageRoute = require("./routes/userImageRoute");
+const commentRoute = require("./routes/commentRoute");
+const likeRoute = require("./routes/likeRoute");
 
 // const friendRoute = require('./routes/friendRoute');
 // const postRoute = require('./routes/postRoute');
 // const userRoute = require('./routes/userRoute');
 
-const notFound = require('./middlewares/notFound');
-const error = require('./middlewares/error');
+const notFound = require("./middlewares/notFound");
+const error = require("./middlewares/error");
 // const authenticate = require('./middlewares/authenticate');
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 }
 //=====================================================constance & local imported Zone
 //=====================================================Encoding Zone
@@ -39,15 +39,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/swipe', swipeRoute);
-app.use('/auth', authRoute);
-app.use('/member', memberRoute);
-app.use('/chat', chatRoute);
-app.use('/admin', adminRoute);
-app.use('/post', postRoute);
-app.use('/userImage', userImageRoute);
-app.use('/comment', commentRoute);
-app.use('/like', likeRoute);
+app.use("/swipe", swipeRoute);
+app.use("/auth", authRoute);
+app.use("/member", memberRoute);
+app.use("/chat", chatRoute);
+app.use("/admin", adminRoute);
+app.use("/post", postRoute);
+app.use("/userImage", userImageRoute);
+app.use("/comment", commentRoute);
+app.use("/like", likeRoute);
 
 app.use(notFound);
 app.use(error);
