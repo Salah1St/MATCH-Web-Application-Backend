@@ -6,6 +6,7 @@ const { Op } = require('sequelize');
 
 const AppError = require('../utils/appError');
 const { User,ChatMessage,Chat,ChatRoom } = require('../sequelize/models');
+const chalk = require('chalk')
 
 
 exports.getAllChatByUserId = async (req, res, next) => {
@@ -48,6 +49,36 @@ exports.addMessage = async (req, res, next) => {
     console.log(req.body,'body');
     await ChatMessage.create(req.body)
 
+
+
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
+exports.createRoom = async (req, res, next) => {
+  try {
+
+
+
+
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+exports.getChatMessage = async (req, res, next) => {
+  const {roomId:chatRoomId,friendsId} = req.body
+  try {
+     const chatRoomData = await ChatMessage.findAll({
+      where:{chatRoomId}    
+    });
+    const friendsData = await User.findOne({
+      where:{id:friendsId}
+    });
+
+    res.status(200).json({chatRoomData,friendsData})
 
 
   } catch (err) {

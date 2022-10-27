@@ -6,7 +6,7 @@ const chalk = require('chalk')
 
 const io = new Server(server, {
   cors: {
-    origin: ["https://admin.socket.io", 'http://localhost:3000'],
+    origin: ["https://admin.socket.io", 'http://localhost:3000','https://2bbd-183-89-154-116.ap.ngrok.io'],
     credentials: true,
     methods: ['GET', 'POST'],
   },
@@ -41,8 +41,10 @@ io.on('connection', async (socket) => {
 
 
   socket.on('sendMessage', input => {
+    console.log(input);
+
     socket.to(onlineUser[input?.to]).emit('receiveMessage', input)
-    socket.to(onlineUser[input?.from]).emit('receiveMessage', input)
+    // io.to(onlineUser[input?.senderId]).emit('receiveMessage', input)
   })
 
   // socket.on('sendMessage', (message) => {
@@ -60,7 +62,6 @@ io.on('connection', async (socket) => {
     console.log('User Disconnected', socket.id, socket.userId, "userId");
   });
 });
-
 
 const port = process.env.PORT || 8080;
 server.listen(port, () => console.log(`server running on port: ${port}`));
