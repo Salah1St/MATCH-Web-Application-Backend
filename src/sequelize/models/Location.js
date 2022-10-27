@@ -1,21 +1,21 @@
 module.exports = (sequelize, DataTypes) => {
   const Location = sequelize.define(
-    "Location",
+    'Location',
     {
       latitude: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notEmpty: true,
-        },
+          notEmpty: true
+        }
       },
       longitude: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notEmpty: true,
-        },
-      },
+          notEmpty: true
+        }
+      }
     },
     { underscored: true }
   );
@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
   Location.associate = (db) => {
     Location.belongsTo(db.User, {
       foreignKey: {
-        name: "userId",
-        allowNull: false,
+        name: 'userId',
+        allowNull: false
       },
-      onDelete: "RESTRICT",
-      onUpdate: "RESTRICT",
+      onDelete: 'RESTRICT',
+      onUpdate: 'RESTRICT'
     });
   };
   return Location;
