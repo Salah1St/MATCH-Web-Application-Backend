@@ -127,6 +127,7 @@ exports.getMe = async (req, res) => {
       where: { id: user.id },
       attributes: { exclude: 'password' },
     });
+    console.log(oneUser);
     res.status(200).json(oneUser);
   } catch (err) {
     next(err);
