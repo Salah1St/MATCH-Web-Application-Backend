@@ -4,10 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       text: {
         type: DataTypes.TEXT('long'),
-        allowNull: false,
-        validate: {
-          notEmpty: true,
-        },
       },
       image: {
         type: DataTypes.STRING,
