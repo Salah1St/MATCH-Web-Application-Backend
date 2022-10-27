@@ -17,20 +17,20 @@ exports.updateLocation = async (req, res, next) => {
       where: { userId: user.id }
     });
     if (userLocationId) {
-      await Location.destroy({ where: { userId: user.id } });
-
-      return await Location.create({
+      await Location.update(
+        {
+          latitude,
+          longitude
+        },
+        { where: { userId: user.id } }
+      );
+    } else {
+      await Location.create({
         latitude,
         longitude,
         userId: user.id
       });
     }
-
-    await Location.create({
-      latitude,
-      longitude,
-      userId: user.id
-    });
 
     res.status(200).json({ message: 'Update location success' });
   } catch (err) {
