@@ -7,6 +7,7 @@ module.exports = {
         message:"hello",
         created_at: new Date(),
         updated_at: new Date(),
+        time:'12:01 PM',
         sender_id:1,
         chat_room_id:1
       },
@@ -14,6 +15,7 @@ module.exports = {
         message:"hi",
         created_at: new Date(),
         updated_at: new Date(),
+        time:'12:02 PM',
         sender_id:2,
         chat_room_id:1
       },
@@ -21,6 +23,7 @@ module.exports = {
         message:"where r u",
         created_at: new Date(),
         updated_at: new Date(),
+        time:'12:03 PM',
         sender_id:1,
         chat_room_id:1
       },
@@ -28,6 +31,7 @@ module.exports = {
         message:"hello",
         created_at: new Date(),
         updated_at: new Date(),
+        time:'12:04 PM',
         sender_id:1,
         chat_room_id:2
       },
@@ -35,6 +39,7 @@ module.exports = {
         message:"hello",
         created_at: new Date(),
         updated_at: new Date(),
+        time:'12:05 PM',
         sender_id:1,
         chat_room_id:4
       },
