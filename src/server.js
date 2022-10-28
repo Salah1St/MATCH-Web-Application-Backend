@@ -14,7 +14,11 @@ const io = new Server(server, {
 instrument(io, {
   auth: false
 });
+
+
 const onlineUser = {}
+
+
 io.use((socket, next) => {
   const userId = socket.handshake.auth.myId;
   console.log("object");
@@ -42,11 +46,10 @@ io.on('connection', async (socket) => {
 
   socket.on('sendMessage', input => {
     console.log(input);
-
     socket.to(onlineUser[input?.to]).emit('receiveMessage', input)
     // io.to(onlineUser[input?.senderId]).emit('receiveMessage', input)
   })
-
+  
   // socket.on('sendMessage', (message) => {
   //   console.log(socket.rooms);
   //   socket.join('new')

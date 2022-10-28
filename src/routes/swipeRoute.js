@@ -13,5 +13,6 @@ router
   .post(upload.none(), authenticate, swipeController.createSwipe);
 
 // router.get('/me', authenticate, authController.getMe);
+router.route('/friendsInfo').get(authenticate, swipeController.fetchFriendsNearMe);
 
 module.exports = router;
