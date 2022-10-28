@@ -42,6 +42,24 @@ exports.createPost = async (req, res, next) => {
           model: User,
           attributes: { exclude: 'password' },
         },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
+        {
+          model: Like,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
       ],
     });
     res.status(200).json({ createdPost });
@@ -66,6 +84,24 @@ exports.getAllMyPosts = async (req, res, next) => {
         {
           model: User,
           attributes: { exclude: 'password' },
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
+        {
+          model: Like,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
         },
       ],
     });
@@ -99,6 +135,24 @@ exports.getAllMyMatchPosts = async (req, res, next) => {
           model: User,
           attributes: { exclude: 'password' },
         },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
+        {
+          model: Like,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
       ],
     });
     res.status(200).json({ allMyMatchPosts });
@@ -115,6 +169,24 @@ exports.getAllPosts = async (req, res, next) => {
         {
           model: User,
           attributes: { exclude: 'password' },
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
+        {
+          model: Like,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
         },
       ],
     });
