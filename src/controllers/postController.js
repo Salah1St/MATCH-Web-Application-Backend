@@ -10,35 +10,55 @@ exports.createPost = async (req, res, next) => {
   try {
     const { text } = req.body;
     const userId = req.user.id;
-    let image;
+    console.log(req.files);
+    let updateValue = { userId };
+    const image = req.files.image?.filename;
+    console.log(req);
 
-    if (req.files) {
-      image = await cloudinary.upload(req.files.image[0].path);
-    }
-    console.log('****');
-    console.log(image);
-    console.log(text);
     if ((!text || !text.trim()) && (!image || !image.trim())) {
       throw new AppError(
         'Either image or text is required to create post',
         401
       );
     }
+    updateValue.text = text;
     if (!userId) {
       throw new AppError('User Id is required to create post', 401);
     }
 
-    const createPost = await Post.create({
-      text,
-      image,
-      userId,
-    });
+    if (req.files?.image) {
+      const imgUrl = await cloudinary.upload(
+        req?.files?.image[0]?.path,
+        image ? cloudinary.getPublicId(image) : undefined
+      );
+      updateValue.image = imgUrl;
+    }
+
+    const createPost = await Post.create(updateValue);
     const createdPost = await Post.findOne({
       where: { id: createPost.id },
       include: [
         {
           model: User,
           attributes: { exclude: 'password' },
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
+        {
+          model: Like,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
         },
       ],
     });
@@ -64,6 +84,24 @@ exports.getAllMyPosts = async (req, res, next) => {
         {
           model: User,
           attributes: { exclude: 'password' },
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
+        {
+          model: Like,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
         },
       ],
     });
@@ -97,6 +135,24 @@ exports.getAllMyMatchPosts = async (req, res, next) => {
           model: User,
           attributes: { exclude: 'password' },
         },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
+        {
+          model: Like,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
       ],
     });
     res.status(200).json({ allMyMatchPosts });
@@ -113,6 +169,24 @@ exports.getAllPosts = async (req, res, next) => {
         {
           model: User,
           attributes: { exclude: 'password' },
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
+        {
+          model: Like,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
         },
       ],
     });
