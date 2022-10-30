@@ -23,7 +23,7 @@ module.exports = {
         last_name: "cccc",
         phone_number: "0899999999",
         profile_image:
-          "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/642cbf1af02109d1d541cb5efa80627c0553c977_xxl-1.jpg",
+          "https://res.cloudinary.com/klothcloud/image/upload/v1667033776/GroupProject/mo_1_y2ldwh.jpg",
         birth_date: "2002-07-15",
         about_me: "good boy",
         occupation: "engineer",
@@ -41,7 +41,7 @@ module.exports = {
         last_name: "sssss",
         phone_number: "0811111111",
         profile_image:
-          "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/17f390c21a238cfbad5af0643bd573c698bbe702_xxl-1.jpg",
+          "https://res.cloudinary.com/klothcloud/image/upload/v1667033771/GroupProject/bomb_1_yhdvwg.jpg",
         birth_date: "2002-07-16",
         about_me: "good girl",
         occupation: "doctor",
@@ -59,7 +59,7 @@ module.exports = {
         last_name: "cccc",
         phone_number: null,
         profile_image:
-          "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/3dbf205aba27a1427b92b062d78a7bba5ce69a7f_xxl-1.jpg",
+          "https://res.cloudinary.com/klothcloud/image/upload/v1667033771/GroupProject/anun_1_jobnue.jpg",
         birth_date: "2002-07-15",
         about_me: "good guy",
         occupation: "teacher",
@@ -77,7 +77,7 @@ module.exports = {
         last_name: "bbbb",
         phone_number: null,
         profile_image:
-          "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/9a940eda23f0f6e28653943cb78ae326c3fe0268_xxl-1.jpg",
+          "https://res.cloudinary.com/klothcloud/image/upload/v1667033769/GroupProject/nun_1_xx5cqd.jpg",
         birth_date: "2002-06-15",
         about_me: "good game",
         occupation: "rider",
@@ -95,7 +95,7 @@ module.exports = {
         last_name: "uuuu",
         phone_number: null,
         profile_image:
-          "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/2d7630d85edcb94196176630b1eafd9b01657059_xxl-1.jpg",
+          "https://res.cloudinary.com/klothcloud/image/upload/v1667033839/GroupProject/5_2_rs5j2w.jpg",
         birth_date: "2002-03-22",
         about_me: "good gene",
         occupation: "driver",
@@ -113,7 +113,7 @@ module.exports = {
         last_name: "nnnn",
         phone_number: null,
         profile_image:
-          "https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/33c49ef90fa7cc01232af7a6a62aadd386965937_xxl-1.jpg",
+          "https://res.cloudinary.com/klothcloud/image/upload/v1667033926/GroupProject/kapook_1_iovv2t.jpg",
         birth_date: "2002-03-27",
         about_me: "good admin",
         occupation: "admin",
@@ -356,6 +356,23 @@ module.exports = {
         phone_number: null,
         profile_image:
           "https://res.cloudinary.com/klothcloud/image/upload/v1666890505/GroupProject/%E0%B8%8A%E0%B8%B4%E0%B8%A7%E0%B8%B2_disnxz.jpg",
+        birth_date: "2002-03-27",
+        about_me: "so good",
+        occupation: "influencer",
+        gender: "FEMALE",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },{
+        username: "game",
+        password:
+          "$2a$12$3LobnJW91yxK7SaczP7q6u7RAtfDtruyAp5/ZX/fYUQwfKFsx7ONK",
+        role: "member",
+        email: "game@gmail.com",
+        first_name: "game",
+        last_name: "game",
+        phone_number: null,
+        profile_image:
+          "https://res.cloudinary.com/klothcloud/image/upload/v1667036614/GroupProject/bnun_sifie7.jpg",
         birth_date: "2002-03-27",
         about_me: "so good",
         occupation: "influencer",
