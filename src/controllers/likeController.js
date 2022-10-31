@@ -54,8 +54,8 @@ exports.toggleLikeByPostId = async (req, res, next) => {
     const isLike = await Like.findOne({ where: { postId, userId } });
     let createLike;
     if (isLike) {
-      await isLike.destroy();
-      return res.status(200).json({ message: 'unliked' });
+      await res.status(200).json({ message: 'unliked', isLike });
+      return isLike.destroy();
     } else {
       createLike = await Like.create({ postId, userId });
     }
