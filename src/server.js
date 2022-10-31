@@ -2,6 +2,8 @@ const server = require("./app");
 const { Server } = require('socket.io');
 const { instrument } = require("@socket.io/admin-ui");
 const chalk = require('chalk')
+const { Swipe, Match } = require('../src/sequelize/models');
+const { createSwipe } = require("./controllers/swipeControllerSocket");
 
 
 const io = new Server(server, {
@@ -44,7 +46,15 @@ io.on('connection', async (socket) => {
 
   });
 
+  socket.on('swipeRight',async ({to,from})=>{
+    console.log(to,from);
+    const  match = await createSwipe(socket,{to,from})
 
+    // const match = await Swipe.findOne({where:{firstId:to,secondId:from}});
+
+    console.log(match?.createdMatch);
+
+  })
   socket.on('sendMessage', input => {
     console.log(input);
     socket.to(onlineUser[input?.to]).emit('receiveMessage', input)
