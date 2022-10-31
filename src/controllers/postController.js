@@ -86,7 +86,10 @@ exports.getAllMyPosts = async (req, res, next) => {
           attributes: { exclude: 'password' },
         },
         {
-          model: Comment,
+
+          model: Like,
+          order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
@@ -95,7 +98,10 @@ exports.getAllMyPosts = async (req, res, next) => {
           ],
         },
         {
-          model: Like,
+
+          model: Comment,
+          order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
@@ -130,13 +136,16 @@ exports.getAllMyMatchPosts = async (req, res, next) => {
     const allMyMatchPosts = await Post.findAll({
       where: { userId: matchIds },
       order: [['createdAt', 'DESC']],
-      include: [
+      iinclude: [
         {
           model: User,
           attributes: { exclude: 'password' },
         },
         {
-          model: Comment,
+
+          model: Like,
+          order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
@@ -145,7 +154,10 @@ exports.getAllMyMatchPosts = async (req, res, next) => {
           ],
         },
         {
-          model: Like,
+
+          model: Comment,
+          order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
@@ -171,7 +183,10 @@ exports.getAllPosts = async (req, res, next) => {
           attributes: { exclude: 'password' },
         },
         {
-          model: Comment,
+
+          model: Like,
+          order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
@@ -180,7 +195,10 @@ exports.getAllPosts = async (req, res, next) => {
           ],
         },
         {
-          model: Like,
+
+          model: Comment,
+          order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
