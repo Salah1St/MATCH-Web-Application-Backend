@@ -20,8 +20,9 @@ const onlineUser = {}
 
 
 io.use((socket, next) => {
-  const userId = socket.handshake.auth.myId;
-  console.log("object");
+  const userId = socket.handshake.auth.id;
+  console.log(socket.id);
+  console.log(userId);
   if (!userId) {
     console.log(chalk.red('error connect'));
     return next(new Error("invalid username"));
@@ -30,11 +31,11 @@ io.use((socket, next) => {
   onlineUser[userId] = socket.id
   console.log(chalk.greenBright(`online : ${Object.keys(onlineUser).length}`));
   console.log(chalk.greenBright(`User connected ${socket.id}`));
-  console.log(onlineUser);
   next();
 });
 
 io.on('connection', async (socket) => {
+  console.log(onlineUser);
   io.emit('onlinefriends', Object.keys(onlineUser))
 
   socket.on('join_room', function (roomName) {
