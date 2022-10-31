@@ -42,6 +42,24 @@ exports.createPost = async (req, res, next) => {
           model: User,
           attributes: { exclude: 'password' },
         },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
+        {
+          model: Like,
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' },
+            },
+          ],
+        },
       ],
     });
     res.status(200).json({ createdPost });
@@ -68,8 +86,10 @@ exports.getAllMyPosts = async (req, res, next) => {
           attributes: { exclude: 'password' },
         },
         {
+
           model: Like,
           order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
@@ -78,8 +98,10 @@ exports.getAllMyPosts = async (req, res, next) => {
           ],
         },
         {
+
           model: Comment,
           order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
@@ -120,8 +142,10 @@ exports.getAllMyMatchPosts = async (req, res, next) => {
           attributes: { exclude: 'password' },
         },
         {
+
           model: Like,
           order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
@@ -130,8 +154,10 @@ exports.getAllMyMatchPosts = async (req, res, next) => {
           ],
         },
         {
+
           model: Comment,
           order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
@@ -157,8 +183,10 @@ exports.getAllPosts = async (req, res, next) => {
           attributes: { exclude: 'password' },
         },
         {
+
           model: Like,
           order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
@@ -167,8 +195,10 @@ exports.getAllPosts = async (req, res, next) => {
           ],
         },
         {
+
           model: Comment,
           order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,

@@ -21,6 +21,7 @@ const postRoute = require('./routes/postRoute');
 const userImageRoute = require('./routes/userImageRoute');
 const commentRoute = require('./routes/commentRoute');
 const likeRoute = require('./routes/likeRoute');
+const nearmeRoute = require('./routes/nearmeRoute');
 
 // const friendRoute = require('./routes/friendRoute');
 // const postRoute = require('./routes/postRoute');
@@ -55,10 +56,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 //=====================================================constance & local imported Zone
 //=====================================================Encoding Zone
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 app.use('/swipe', swipeRoute);
 app.use('/auth', authRoute);
 app.use('/member', memberRoute);
@@ -68,6 +69,7 @@ app.use('/post', postRoute);
 app.use('/userImage', userImageRoute);
 app.use('/comment', commentRoute);
 app.use('/like', likeRoute);
+app.use('/nearme', nearmeRoute);
 
 app.use(notFound);
 app.use(error);

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    'User',
+    "User",
     {
       username: {
         type: DataTypes.STRING,
@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       role: {
-        type: DataTypes.ENUM('admin', 'member', 'goldmember'), // to be changed
-        defaultValue: 'member',
+        type: DataTypes.ENUM("admin", "member", "goldmember"), // to be changed
+        defaultValue: "member",
         allowNull: false,
 
         validate: {
@@ -60,13 +60,13 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       aboutMe: {
-        type: DataTypes.TEXT('long'),
+        type: DataTypes.TEXT("long"),
       },
       occupation: {
         type: DataTypes.STRING,
       },
       gender: {
-        type: DataTypes.ENUM('MALE', 'FEMALE', 'UNDEFINED'),
+        type: DataTypes.ENUM("MALE", "FEMALE", "UNDEFINED"),
         allowNull: false,
         validate: {
           notEmpty: true,
@@ -79,148 +79,158 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = (db) => {
     User.hasMany(db.Post, {
       foreignKey: {
-        name: 'userId',
+        name: "userId",
         allowNull: false,
       },
 
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
 
     User.hasMany(db.UserImage, {
       foreignKey: {
-        name: 'userId',
+        name: "userId",
         allowNull: false,
       },
 
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
 
     User.hasMany(db.Like, {
       foreignKey: {
-        name: 'userId',
+        name: "userId",
         allowNull: false,
       },
 
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
     User.hasMany(db.Comment, {
       foreignKey: {
-        name: 'userId',
+        name: "userId",
         allowNull: false,
       },
 
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
     User.hasMany(db.Interest, {
       foreignKey: {
-        name: 'adminId',
+        name: "adminId",
         allowNull: false,
       },
 
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
 
     //************Chat ******** */
     User.hasMany(db.Chat, {
-      as: 'myacceptId',
+      as: "myacceptId",
       foreignKey: {
-        name: 'acceptId',
+        name: "acceptId",
         allowNull: false,
       },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
     User.hasMany(db.Chat, {
-      as: 'myrequestId',
+      as: "myrequestId",
       foreignKey: {
-        name: 'requestId',
+        name: "requestId",
         allowNull: false,
       },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
 
     /*******Swipe********* */
     User.hasMany(db.Swipe, {
-      as: 'swipefirstId',
+      as: "swipefirstId",
       foreignKey: {
-        name: 'firstId',
+        name: "firstId",
         allowNull: false,
       },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
     User.hasMany(db.Swipe, {
-      as: 'swipesecondId',
+      as: "swipesecondId",
       foreignKey: {
-        name: 'secondId',
+        name: "secondId",
         allowNull: false,
       },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
 
     //************** match */
     User.hasMany(db.Match, {
-      as: 'myfirstId',
+      as: "myfirstId",
       foreignKey: {
-        name: 'firstId',
+        name: "firstId",
         allowNull: false,
       },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
 
     User.hasMany(db.Match, {
-      as: 'mysecondId',
+      as: "mysecondId",
       foreignKey: {
-        name: 'secondId',
+        name: "secondId",
         allowNull: false,
       },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
 
     User.hasMany(db.InterestLog, {
-      as: 'userId',
+      as: "userId",
       foreignKey: {
-        name: 'userId',
+        name: "userId",
         allowNull: false,
       },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
 
     User.hasMany(db.ChatMessage, {
       foreignKey: {
-        name: 'senderId',
+        name: "senderId",
         allowNull: false,
       },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
     User.hasMany(db.ChatRoom, {
-      as: 'mylowerId',
+      as: "mylowerId",
       foreignKey: {
-        name: 'userLowerId',
+        name: "userLowerId",
         allowNull: false,
       },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
     User.hasMany(db.ChatRoom, {
-      as: 'myhigherId',
+      as: "myhigherId",
       foreignKey: {
-        name: 'userHigherId',
+        name: "userHigherId",
         allowNull: false,
       },
-      onDelete: 'RESTRICT',
-      onUpdate: 'RESTRICT',
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
+    });
+
+    //************** location */
+    User.hasMany(db.Location, {
+      foreignKey: {
+        name: "userId",
+        allowNull: false,
+      },
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     });
   };
 

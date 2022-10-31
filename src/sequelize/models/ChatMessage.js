@@ -8,6 +8,12 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: true,
         },
+      },time: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: true,
+        },
       },
     },
     { underscored: true }
