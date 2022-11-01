@@ -9,6 +9,7 @@ const router = express.Router();
 router.route("/register").post(upload.none(), authController.register);
 router.post("/login", upload.none(), authController.login);
 router.post("/me", authenticate, authController.getMe);
+router.post("/getInformation", authenticate, authController.getInformation);
 router.patch(
   "/updateUser",
   authenticate,
