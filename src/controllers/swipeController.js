@@ -102,3 +102,38 @@ exports.createSwipe = async (req, res, next) => {
     next(err);
   }
 };
+exports.fetchFriendsNearMe = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const friends = await User.findAll({
+      where: {
+        id: { [Op.ne]: userId },
+      },
+      order: [['id', 'DESC']],
+      attributes:{exclude:['password']}
+    });
+
+    res.status(200).json( friends );
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+exports.swipeRight = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const friends = await Swipe.findAll(/* {
+      where: {
+        id: { [Op.ne]: userId },
+      },
+      order: [['id', 'DESC']],
+      attributes:{exclude:['password']}
+    } */);
+
+    res.status(200).json( friends );
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};

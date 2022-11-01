@@ -4,7 +4,13 @@ const { Op } = require('sequelize');
 
 const AppError = require('../utils/appError');
 const { User } = require('../sequelize/models');
-const { Post, Like, Comment, sequelize } = require('../sequelize/models');
+const {
+  Post,
+  Like,
+  Comment,
+  Match,
+  sequelize
+} = require('../sequelize/models');
 
 exports.createPost = async (req, res, next) => {
   try {
@@ -40,27 +46,27 @@ exports.createPost = async (req, res, next) => {
       include: [
         {
           model: User,
-          attributes: { exclude: 'password' },
+          attributes: { exclude: 'password' }
         },
         {
           model: Comment,
           include: [
             {
               model: User,
-              attributes: { exclude: 'password' },
-            },
-          ],
+              attributes: { exclude: 'password' }
+            }
+          ]
         },
         {
           model: Like,
           include: [
             {
               model: User,
-              attributes: { exclude: 'password' },
-            },
-          ],
-        },
-      ],
+              attributes: { exclude: 'password' }
+            }
+          ]
+        }
+      ]
     });
     res.status(200).json({ createdPost });
   } catch (err) {
@@ -83,27 +89,31 @@ exports.getAllMyPosts = async (req, res, next) => {
       include: [
         {
           model: User,
-          attributes: { exclude: 'password' },
-        },
-        {
-          model: Comment,
-          include: [
-            {
-              model: User,
-              attributes: { exclude: 'password' },
-            },
-          ],
+          attributes: { exclude: 'password' }
         },
         {
           model: Like,
+          order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
-              attributes: { exclude: 'password' },
-            },
-          ],
+              attributes: { exclude: 'password' }
+            }
+          ]
         },
-      ],
+        {
+          model: Comment,
+          order: [['createdAt', 'DESC']],
+
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' }
+            }
+          ]
+        }
+      ]
     });
     res.status(200).json({ allMyPosts });
   } catch (err) {
@@ -117,7 +127,7 @@ exports.getAllMyMatchPosts = async (req, res, next) => {
     const userId = req.user.id;
     const allMyMatch = await Match.findAll({
       where: { [Op.or]: [{ firstId: userId }, { secondId: userId }] },
-      order: [['createdAt', 'DESC']],
+      order: [['createdAt', 'DESC']]
     });
     const matchIds = allMyMatch.map((item) =>
       item.firstId === userId ? item.secondId : item.firstId
@@ -133,27 +143,31 @@ exports.getAllMyMatchPosts = async (req, res, next) => {
       include: [
         {
           model: User,
-          attributes: { exclude: 'password' },
-        },
-        {
-          model: Comment,
-          include: [
-            {
-              model: User,
-              attributes: { exclude: 'password' },
-            },
-          ],
+          attributes: { exclude: 'password' }
         },
         {
           model: Like,
+          order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
-              attributes: { exclude: 'password' },
-            },
-          ],
+              attributes: { exclude: 'password' }
+            }
+          ]
         },
-      ],
+        {
+          model: Comment,
+          order: [['createdAt', 'DESC']],
+
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' }
+            }
+          ]
+        }
+      ]
     });
     res.status(200).json({ allMyMatchPosts });
   } catch (err) {
@@ -168,27 +182,31 @@ exports.getAllPosts = async (req, res, next) => {
       include: [
         {
           model: User,
-          attributes: { exclude: 'password' },
-        },
-        {
-          model: Comment,
-          include: [
-            {
-              model: User,
-              attributes: { exclude: 'password' },
-            },
-          ],
+          attributes: { exclude: 'password' }
         },
         {
           model: Like,
+          order: [['createdAt', 'DESC']],
+
           include: [
             {
               model: User,
-              attributes: { exclude: 'password' },
-            },
-          ],
+              attributes: { exclude: 'password' }
+            }
+          ]
         },
-      ],
+        {
+          model: Comment,
+          order: [['createdAt', 'DESC']],
+
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' }
+            }
+          ]
+        }
+      ]
     });
     res.status(200).json({ allPosts });
   } catch (err) {
@@ -238,9 +256,9 @@ exports.editPostById = async (req, res, next) => {
       include: [
         {
           model: User,
-          attributes: { exclude: 'password' },
-        },
-      ],
+          attributes: { exclude: 'password' }
+        }
+      ]
     });
     res.status(200).json({ editPost });
   } catch (err) {
