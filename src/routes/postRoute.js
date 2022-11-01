@@ -9,6 +9,7 @@ const router = express.Router();
 router.route('/').get(authenticate, postController.getAllMyPosts);
 router.route('/mymatch').get(authenticate, postController.getAllMyMatchPosts);
 router.route('/all').get(authenticate, postController.getAllPosts);
+router.route('/:id').get(authenticate, postController.getUserPostById);
 router.route('/:postId').delete(authenticate, postController.deletePostById);
 router
   .route('/')
@@ -24,5 +25,4 @@ router
     authenticate,
     postController.editPostById
   );
-
 module.exports = router;

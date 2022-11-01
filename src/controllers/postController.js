@@ -266,3 +266,65 @@ exports.editPostById = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getUserPostById = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+    console.log('kuy userId', userId);
+    console.log('kuy id tummada', id);
+    const MyMatch = await Match.findOne({
+      where: {
+        [Op.or]: [
+          { firstId: userId, secondId: id },
+          { secondId: userId, firstId: id }
+        ]
+      },
+      order: [['createdAt', 'DESC']]
+    });
+    console.log(MyMatch);
+    if (!userId) {
+      throw new AppError('User Id is required ', 401);
+    }
+    if (!MyMatch) {
+      throw new AppError('User Its not Match ', 401);
+    }
+
+    const allMyMatchPosts = await Post.findAll({
+      where: { userId: id },
+      order: [['createdAt', 'DESC']],
+      include: [
+        {
+          model: User,
+          attributes: { exclude: 'password' }
+        },
+        {
+          model: Like,
+          order: [['createdAt', 'DESC']],
+
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' }
+            }
+          ]
+        },
+        {
+          model: Comment,
+          order: [['createdAt', 'DESC']],
+
+          include: [
+            {
+              model: User,
+              attributes: { exclude: 'password' }
+            }
+          ]
+        }
+      ]
+    });
+    res.status(200).json({ allMyMatchPosts });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
