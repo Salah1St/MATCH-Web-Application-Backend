@@ -137,9 +137,18 @@ exports.getMe = async (req, res) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const user = req.user;
-    const { firstName, lastName, email, gender, occupation } = req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      aboutMe,
+      gender,
+      birthDate,
+      occupation,
+      interest,
+    } = req.body;
     const file = req.file;
-    console.log(firstName, lastName, email, gender, occupation, file);
+    console.log(typeof file);
     const findUser = await User.findOne({ where: { id: user.id } });
 
     let profileImage = findUser.profileImage;
@@ -156,14 +165,16 @@ exports.updateUser = async (req, res, next) => {
         firstName,
         lastName,
         email,
+        aboutMe,
         gender,
+        birthDate,
         occupation,
         profileImage,
       },
       { where: { id: user.id } }
     );
     const showUser = await User.findOne({ where: { id: user.id } });
-    res.status(200).json({ showUser });
+    res.status(200).json(showUser);
   } catch (err) {
     next(err);
   }
@@ -176,7 +187,6 @@ exports.getInformation = async (req, res, next) => {
       where: { id: user.id },
       attributes: { exclude: "password" },
     });
-
     const findInterestLog = await InterestLog.findAll({
       where: { userId: user.id },
     });

@@ -63,9 +63,7 @@ exports.deleteInterest = async (req, res, next) => {
 exports.getAll = async (req, res, next) => {
   try {
     const user = req.user;
-    if (user.role !== "admin") {
-      throw new AppError("you are not admin");
-    }
+
     const allInterest = await Interest.findAll();
     res.status(200).json({ allInterest: allInterest });
   } catch (err) {
