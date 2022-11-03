@@ -6,23 +6,37 @@ const fs = require('fs');
 exports.createInterest = async (req, res, next) => {
   try {
     const user = req.user;
-    const { text } = req.body;
+    const { ...updateValue } = req.body;
 
     if (user.role !== 'admin') {
       throw new AppError('you are not admin');
     }
 
-    if (!req.file) {
+    if (!req.files.icon) {
+      throw new AppError('icon is required', 400);
+    }
+    if (!req.files.interestImage) {
       throw new AppError('image is required', 400);
+    }
+    if (!updateValue.text) {
+      throw new AppError('text is required', 400);
     }
 
     const data = {};
-    if (text) {
-      data.text = text;
+    if (updateValue.text) {
+      data.text = updateValue.text;
+    }
+    if (updateValue.description) {
+      data.description = updateValue.description;
     }
 
-    if (req.file) {
-      data.icon = await cloudinary.upload(req.file.path);
+    if (req.files.icon) {
+      data.icon = await cloudinary.upload(req.files.icon[0].path);
+    }
+    if (req.files.interestImage) {
+      data.interestImage = await cloudinary.upload(
+        req.files.interestImage[0].path
+      );
     }
 
     if (user.role) {
@@ -34,8 +48,11 @@ exports.createInterest = async (req, res, next) => {
   } catch (err) {
     next(err);
   } finally {
-    if (req.file) {
-      fs.unlinkSync(req.file.path);
+    if (req.files.icon) {
+      fs.unlinkSync(req.files.icon[0].path);
+    }
+    if (req.files.interestImage) {
+      fs.unlinkSync(req.files.interestImage[0].path);
     }
   }
 };
@@ -91,12 +108,12 @@ exports.getOne = async (req, res, next) => {
 exports.updateInterest = async (req, res, next) => {
   try {
     const user = req.user;
+    const { ...updateValue } = req.body;
+    const { id } = req.params;
+
     if (user.role !== 'admin') {
       throw new AppError('you are not admin');
     }
-
-    const { ...updateValue } = req.body;
-    const { id } = req.params;
 
     if (req.files.icon) {
       const icon = req.user.icon;
