@@ -2,6 +2,8 @@ const server = require("./app");
 const { Server } = require('socket.io');
 const { instrument } = require("@socket.io/admin-ui");
 const chalk = require('chalk')
+const { Swipe, Match } = require('../src/sequelize/models');
+const { createSwipe } = require("./controllers/swipeControllerSocket");
 
 
 const io = new Server(server, {
@@ -36,7 +38,7 @@ io.use((socket, next) => {
 
 io.on('connection', async (socket) => {
   console.log(onlineUser);
-  io.emit('onlinefriends', Object.keys(onlineUser))
+  io.emit('onlinefriends', onlineUser)
 
   socket.on('join_room', function (roomName) {
     socket.join(roomName);
@@ -44,7 +46,20 @@ io.on('connection', async (socket) => {
 
   });
 
+  socket.on('swipeRight',async ({to,from})=>{
+    console.log(to,from);
+    const  match = await createSwipe(socket,{to,from})
 
+    // const match = await Swipe.findOne({where:{firstId:to,secondId:from}});
+
+    if(+match?.createdMatch?.firstId === +from){
+      socket.to(onlineUser[to]).emit('matchRealTime',match)
+    }
+    else{
+      socket.to(onlineUser[to]).emit('likeRealTime',match.newSwipe)
+    }
+
+  })
   socket.on('sendMessage', input => {
     console.log(input);
     socket.to(onlineUser[input?.to]).emit('receiveMessage', input)
@@ -62,7 +77,7 @@ io.on('connection', async (socket) => {
   socket.on('disconnect', () => {
     delete onlineUser[socket.userId]
     console.log(onlineUser);
-    io.emit('onlinefriends', Object.keys(onlineUser))
+    io.emit('onlinefriends', onlineUser)
     console.log('User Disconnected', socket.id, socket.userId, "userId");
   });
 });

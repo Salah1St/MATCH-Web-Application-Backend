@@ -95,6 +95,7 @@ exports.createSwipe = async (req, res, next) => {
         secondId: id,
       });
       res.status(200).json({ newSwipe, createdMatch });
+      return;
     }
     res.status(200).json({ newSwipe });
   } catch (err) {
@@ -119,19 +120,44 @@ exports.fetchFriendsNearMe = async (req, res, next) => {
     next(err);
   }
 };
+
 exports.swipeRight = async (req, res, next) => {
   try {
     const userId = req.user.id;
 
-    const friends = await Swipe.findAll(/* {
-      where: {
-        id: { [Op.ne]: userId },
-      },
-      order: [['id', 'DESC']],
-      attributes:{exclude:['password']}
-    } */);
+    const friends = await Swipe.crate();
 
     res.status(200).json( friends );
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+exports.fetchMatch = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const friendsMatch = await Match.findAll({
+      where: {firstId: userId },
+      order: [['createdAt', 'DESC']],
+      include: [{model: User,
+                 attributes: { exclude: 'password' },
+                as: 'mysecondId',
+               },]
+    });
+
+    const myMatch = await Match.findAll({
+      where: { secondId: userId},
+      order: [['createdAt', 'DESC']],
+      include: [{model: User,
+                attributes: { exclude: 'password' },
+                as: 'myfirstId',
+                },]
+    });
+
+    const output = [...friendsMatch.map((i,d)=>({matchId:i.id,matchFriends:i.mysecondId})),...myMatch.map((i,d)=>({matchId:i.id,matchFriends:i.myfirstId}))]
+
+    res.status(200).json( output );
   } catch (err) {
     console.log(err);
     next(err);
