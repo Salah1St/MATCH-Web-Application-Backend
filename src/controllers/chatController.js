@@ -57,17 +57,6 @@ exports.addMessage = async (req, res, next) => {
   }
 };
 
-exports.createRoom = async (req, res, next) => {
-  try {
-
-
-
-
-  } catch (err) {
-    console.log(err);
-    next(err);
-  }
-};
 exports.getChatMessage = async (req, res, next) => {
   const {roomId:chatRoomId,friendsId} = req.body
   try {
@@ -96,7 +85,7 @@ exports.createRoom = async (req, res, next) => {
     const userLowerId = Math.min(friends,userId);
     const roomName = `${userLowerId}${userHigherId}`
     const checkExits = await ChatRoom.findOne({where:{roomName}})
-    const data = checkExits.id ? checkExits : await ChatRoom.create({roomName,userLowerId,userHigherId}) ;
+    const data = checkExits?.id ? checkExits : await ChatRoom.create({roomName,userLowerId,userHigherId}) ;
     res.status(200).json(data)
 
   } catch (err) {
