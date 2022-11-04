@@ -38,7 +38,7 @@ io.use((socket, next) => {
 
 io.on('connection', async (socket) => {
   console.log(onlineUser);
-  io.emit('onlinefriends', Object.keys(onlineUser))
+  io.emit('onlinefriends', onlineUser)
 
   socket.on('join_room', function (roomName) {
     socket.join(roomName);
@@ -52,7 +52,12 @@ io.on('connection', async (socket) => {
 
     // const match = await Swipe.findOne({where:{firstId:to,secondId:from}});
 
-    console.log(match?.createdMatch);
+    if(+match?.createdMatch?.firstId === +from){
+      socket.to(onlineUser[to]).emit('matchRealTime',match)
+    }
+    else{
+      socket.to(onlineUser[to]).emit('likeRealTime',match.newSwipe)
+    }
 
   })
   socket.on('sendMessage', input => {
@@ -72,7 +77,7 @@ io.on('connection', async (socket) => {
   socket.on('disconnect', () => {
     delete onlineUser[socket.userId]
     console.log(onlineUser);
-    io.emit('onlinefriends', Object.keys(onlineUser))
+    io.emit('onlinefriends', onlineUser)
     console.log('User Disconnected', socket.id, socket.userId, "userId");
   });
 });

@@ -133,3 +133,33 @@ exports.swipeRight = async (req, res, next) => {
     next(err);
   }
 };
+exports.fetchMatch = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const friendsMatch = await Match.findAll({
+      where: {firstId: userId },
+      order: [['createdAt', 'DESC']],
+      include: [{model: User,
+                 attributes: { exclude: 'password' },
+                as: 'mysecondId',
+               },]
+    });
+
+    const myMatch = await Match.findAll({
+      where: { secondId: userId},
+      order: [['createdAt', 'DESC']],
+      include: [{model: User,
+                attributes: { exclude: 'password' },
+                as: 'myfirstId',
+                },]
+    });
+
+    const output = [...friendsMatch.map((i,d)=>({matchId:i.id,matchFriends:i.mysecondId})),...myMatch.map((i,d)=>({matchId:i.id,matchFriends:i.myfirstId}))]
+
+    res.status(200).json( output );
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};

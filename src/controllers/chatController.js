@@ -89,9 +89,15 @@ exports.getChatMessage = async (req, res, next) => {
 
 exports.createRoom = async (req, res, next) => {
   try {
-
-
-
+    const userId = req.user.id;
+    const friends = req.body.id;
+    console.log(req.body);
+    const userHigherId = Math.max(friends,userId);
+    const userLowerId = Math.min(friends,userId);
+    const roomName = `${userLowerId}${userHigherId}`
+    const checkExits = await ChatRoom.findOne({where:{roomName}})
+    const data = checkExits.id ? checkExits : await ChatRoom.create({roomName,userLowerId,userHigherId}) ;
+    res.status(200).json(data)
 
   } catch (err) {
     console.log(err);

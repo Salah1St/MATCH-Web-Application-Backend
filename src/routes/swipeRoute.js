@@ -15,6 +15,8 @@ router
 // router.get('/me', authenticate, authController.getMe);
 router.route('/friendsInfo').get(authenticate, swipeController.fetchFriendsNearMe);
 router.route('/createSwipe').post(authenticate, swipeController.createSwipe);
+router.route('/myMatch').get(authenticate, swipeController.fetchMatch);
+
 
 
 module.exports = router;
