@@ -14,44 +14,59 @@ module.exports = {
      */
     return queryInterface.bulkInsert("posts", [
       {
-        text: "yeah",
-        image:
-          "https://as2.ftcdn.net/v2/jpg/05/18/97/27/1000_F_518972795_ITA7JBzGRPXTo6AWoMwaG21vfT3A62ak.jpg",
+        text: "test1",
         created_at: new Date(),
         updated_at: new Date(),
         user_id: 1,
       },
       {
-        text: "yo",
-        image:
-          "https://as1.ftcdn.net/v2/jpg/05/20/99/34/1000_F_520993427_OAzSRpFc0rbNy5FUKxgRI9EpuFDHwoLv.jpg",
+        text: "test2",
         created_at: new Date(),
         updated_at: new Date(),
         user_id: 2,
       },
       {
-        text: "yes",
-        image:
-          "https://as1.ftcdn.net/v2/jpg/05/22/14/10/1000_F_522141084_YPFx85nE3ExJxW7WjEJg2VwSp38z19FU.jpg",
+        text: "test3",
         created_at: new Date(),
         updated_at: new Date(),
         user_id: 3,
       },
       {
-        text: "yup",
-        image:
-          "https://as2.ftcdn.net/v2/jpg/05/20/04/83/1000_F_520048346_Le0PXTjDI5y8bXFQEnmtZO81Dm1YaPRM.jpg",
+        text: "test4",
         created_at: new Date(),
         updated_at: new Date(),
         user_id: 4,
       },
       {
-        text: "yoyo",
-        image:
-          "https://as1.ftcdn.net/v2/jpg/05/19/18/64/1000_F_519186467_EVmzIrUdGkZXjy7fzsZ1rI38siFbx16l.jpg",
+        text: "test5",
         created_at: new Date(),
         updated_at: new Date(),
         user_id: 5,
+      }, {
+        text: "test6",
+        created_at: new Date(),
+        updated_at: new Date(),
+        user_id: 6,
+      }, {
+        text: "test7",
+        created_at: new Date(),
+        updated_at: new Date(),
+        user_id: 7,
+      }, {
+        text: "test8",
+        created_at: new Date(),
+        updated_at: new Date(),
+        user_id: 8,
+      }, {
+        text: "test9",
+        created_at: new Date(),
+        updated_at: new Date(),
+        user_id: 9,
+      }, {
+        text: "test10",
+        created_at: new Date(),
+        updated_at: new Date(),
+        user_id: 10,
       },
     ]);
   },
